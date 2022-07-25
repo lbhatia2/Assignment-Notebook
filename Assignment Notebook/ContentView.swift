@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var assignmentList = assignmentList()
-    @State private var showingAddItemView = false
+    @ObservedObject var assignmentList = AssignmentList()
+    @State private var showingAddAssignmentView = false
     
     var body: some View {
         NavigationView{
             List{
-                ForEach(AssignmentList.item){item in
+                ForEach(assignmentList.items) { item in
                     HStack {
                         VStack{
                             Text(item.course)
@@ -34,16 +34,15 @@ struct ContentView: View {
                 }
                 
             }
-            .sheet(isPresented: $showingAddItemView, content: {
-                AddItemView(assignmentList : assignmentList)
+            .sheet(isPresented: $showingAddAssignmentView, content: {
+                AddAssignmentView(assignmentList : assignmentList)
             })
             .navigationBarTitle("Assignment Notebook", displayMode: .inline)
             .navigationBarItems(leading: EditButton(),
                                 trailing:Button(action: {
-                showingAddItemView = true}){
+                showingAddAssignmentView = true}){
                     Image(systemName: "plus")
                 })
-            
         }
     }
 }
